@@ -49,6 +49,8 @@ export const CheckoutItemContainer = styled.div`
           -webkit-appearance: none;
           margin: 0;
         }
+
+        -moz-appearance: textfield;
       }
     }
 
