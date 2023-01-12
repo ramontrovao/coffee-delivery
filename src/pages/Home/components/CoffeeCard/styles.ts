@@ -107,6 +107,8 @@ export const CoffeeCardContainer = styled.div`
           -webkit-appearance: none;
           margin: 0;
         }
+
+        -moz-appearance: textfield;
       }
 
       button[type="submit"] {
