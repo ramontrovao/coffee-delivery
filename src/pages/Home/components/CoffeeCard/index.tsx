@@ -1,34 +1,81 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { FormEvent, ChangeEvent, useState } from "react";
 import { CoffeeCardContainer } from "./styles";
+interface CoffeeCardProps {
+  imgSrc: string;
+  name: string;
+  description: string;
+  price: string;
+  tags: Array<string>;
+}
 
-export function CoffeeCard() {
+export function CoffeeCard({
+  imgSrc,
+  name,
+  description,
+  price,
+  tags,
+}: CoffeeCardProps) {
+  const [coffeeQuantity, setcoffeeQuantity] = useState(1);
+
+  function handleIncreaseQuantityValue(event: FormEvent) {
+    event.preventDefault();
+
+    if (coffeeQuantity < 99 && coffeeQuantity >= 1) {
+      setcoffeeQuantity((prev) => prev + 1);
+    }
+  }
+
+  function handleChangeQuantity(event: ChangeEvent<HTMLInputElement>) {
+    if (coffeeQuantity < 99 && coffeeQuantity > 1) {
+      setcoffeeQuantity(Number(event.target.value));
+    }
+  }
+
+  function handleDecreaseQuantityValue(event: FormEvent) {
+    event.preventDefault();
+
+    if (coffeeQuantity <= 99 && coffeeQuantity > 1) {
+      setcoffeeQuantity((prev) => prev - 1);
+    }
+  }
+
   return (
     <CoffeeCardContainer>
       <header>
-        <img src="./assets/express.svg" alt="" />
+        <img src={imgSrc} />
 
         <div className="tags">
-          <div>
-            <p>TRADICIONAL</p>
-          </div>
+          {tags &&
+            tags.map((tag) => (
+              <div className="tag" key={tag}>
+                <p>{tag}</p>
+              </div>
+            ))}
         </div>
       </header>
       <main>
-        <h2>Expresso Tradicional</h2>
+        <h2>{name}</h2>
 
-        <p>O tradicional café feito com água quente e grãos moídos</p>
+        <p>{description}</p>
       </main>
       <footer>
         <div>
-          <span>R$</span> <strong>9,90</strong>
+          <span>R$</span> <strong>{price}</strong>
         </div>
         <form>
           <div>
-            <button>
+            <button onClick={handleIncreaseQuantityValue}>
               <Plus weight="bold" />
             </button>
-            <input type="number" />
-            <button>
+            <input
+              type="number"
+              onChange={handleChangeQuantity}
+              value={coffeeQuantity}
+              min="1"
+              max="99"
+            />
+            <button onClick={handleDecreaseQuantityValue}>
               <Minus weight="bold" />
             </button>
           </div>

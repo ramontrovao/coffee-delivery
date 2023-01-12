@@ -5,6 +5,10 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+
+        @media (max-width: 425px) {
+            font-size: 95%;
+        }
     }
 
     body {

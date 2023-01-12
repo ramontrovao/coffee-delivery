@@ -14,17 +14,22 @@ export const CoffeeCardContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 
     img {
       width: 7.5rem;
       margin-top: -3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
-    div {
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .tag {
       background-color: ${({ theme }) => theme["yellow-100"]};
-      padding: 0.25rem;
+      padding: 0.5rem;
       border-radius: 100px;
 
       p {
@@ -45,7 +50,7 @@ export const CoffeeCardContainer = styled.div`
     p {
       text-align: center;
       font-size: 0.9rem;
-      margin-top: 1rem;
+      margin-top: 0.25rem;
       margin-bottom: 2rem;
 
       color: ${({ theme }) => theme["gray-600"]};
@@ -59,7 +64,12 @@ export const CoffeeCardContainer = styled.div`
     width: 100%;
 
     div {
+      span {
+        color: ${({ theme }) => theme["gray-500"]};
+      }
+
       strong {
+        color: ${({ theme }) => theme["gray-600"]};
         font-family: "Baloo 2";
         font-size: 1.5rem;
       }
@@ -87,7 +97,8 @@ export const CoffeeCardContainer = styled.div`
       }
 
       input {
-        width: 1rem;
+        width: 1.5rem;
+        text-align: center;
         background-color: transparent;
         border: 0;
 
