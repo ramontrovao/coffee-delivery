@@ -37,21 +37,6 @@ export const CheckoutItemContainer = styled.div`
 
         color: ${({ theme }) => theme["purple-300"]};
       }
-
-      input {
-        width: 1.5rem;
-        text-align: center;
-        background-color: transparent;
-        border: 0;
-
-        &::-webkit-outer-spin-button,
-        ::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-
-        -moz-appearance: textfield;
-      }
     }
 
     .removeCoffeeButton {

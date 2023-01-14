@@ -1,32 +1,61 @@
-import { Minus, Plus } from "phosphor-react";
+import { FormEvent, useState, useContext } from "react";
+import { CoffeeContext } from "../../../../context/CoffeeListContext";
+import { InputQuantity } from "../../../../components/InputQuantity";
 import { CheckoutItemContainer } from "./styles";
 
-export function CheckoutItem() {
+interface CheckoutItemProps {
+  name: string;
+  price: string;
+  imgSrc: string;
+}
+
+export function CheckoutItem({ name, price, imgSrc }: CheckoutItemProps) {
+  const [coffeeQuantity, setcoffeeQuantity] = useState(1);
+  const coffeeData = useContext(CoffeeContext);
+
+  function handleIncreaseQuantityValue(event: FormEvent) {
+    event.preventDefault();
+
+    if (coffeeQuantity < 99 && coffeeQuantity >= 1) {
+      setcoffeeQuantity((prev) => prev + 1);
+    }
+  }
+
+  function handleDecreaseQuantityValue(event: FormEvent) {
+    event.preventDefault();
+
+    if (coffeeQuantity <= 99 && coffeeQuantity > 1) {
+      setcoffeeQuantity((prev) => prev - 1);
+    }
+  }
+
+  function onRemoveCoffee(event: FormEvent) {
+    event.preventDefault();
+
+    coffeeData.removeCoffee(name);
+  }
+
   return (
     <CheckoutItemContainer>
-      <img src="./assets/express.svg" />
+      <img src={imgSrc} />
 
       <div>
         <div className="nameAndPriceWrapper">
-          <p>Expresso Tradicional</p>
+          <p>{name}</p>
 
-          <strong>R$ 9,90</strong>
+          <strong>R${price}</strong>
         </div>
 
-        <div>
-          <div className="removeWrapper">
-            <div>
-              <button>
-                <Plus weight="bold" />
-              </button>
-              <input type="number" min="1" max="99" />
-              <button>
-                <Minus weight="bold" />
-              </button>
-            </div>
+        <div className="removeWrapper">
+          <InputQuantity
+            increase={handleIncreaseQuantityValue}
+            decrease={handleDecreaseQuantityValue}
+            quantity={coffeeQuantity}
+          />
 
-            <button className="removeCoffeeButton">REMOVER</button>
-          </div>
+          <button className="removeCoffeeButton" onClick={onRemoveCoffee}>
+            REMOVER
+          </button>
         </div>
       </div>
     </CheckoutItemContainer>

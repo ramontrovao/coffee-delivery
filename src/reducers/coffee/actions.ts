@@ -15,7 +15,7 @@ export const addNewCoffeeAction = (newCoffee: Coffee) => {
   };
 };
 
-export const removeCoffeeAction = (coffeeToRemove: Coffee) => {
+export const removeCoffeeAction = (coffeeToRemove: string) => {
   return {
     type: ActionTypes.REMOVE_COFFEE,
     payload: {
@@ -24,8 +24,11 @@ export const removeCoffeeAction = (coffeeToRemove: Coffee) => {
   };
 };
 
-export const purchaseCoffeeAction = () => {
+export const purchaseCoffeeAction = (coffeeToPurchase: Coffee) => {
   return {
     type: ActionTypes.PURCHASE_COFFEE,
+    payload: {
+      coffeeToPurchase,
+    },
   };
 };

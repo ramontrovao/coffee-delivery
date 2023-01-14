@@ -1,8 +1,28 @@
+import { useContext, useEffect, useState } from "react";
+import { CoffeeContext } from "../../context/CoffeeListContext";
 import { CheckoutContainer } from "./styles";
 import { CheckoutItem } from "./components/CheckoutItem";
 import { Link } from "react-router-dom";
 
 export function Checkout() {
+  const coffeeData = useContext(CoffeeContext);
+  const coffeeList = coffeeData.coffeeState.coffeeList;
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (coffeeList.length > 0) {
+      let prices = coffeeList.map((coffee) => {
+        const priceBRL = coffee.price.replace(",", ".");
+
+        return Number(priceBRL);
+      });
+
+      setTotalPrice(0);
+
+      prices.map((price) => setTotalPrice((prev) => prev + price));
+    }
+  }, [coffeeList]);
+
   return (
     <CheckoutContainer>
       <div className="wrapper1">
@@ -59,15 +79,19 @@ export function Checkout() {
 
         <section className="cartSection">
           <header>
-            <CheckoutItem />
-            <CheckoutItem />
-            <CheckoutItem />
+            {coffeeData.coffeeState.coffeeList.map((coffee) => (
+              <CheckoutItem
+                name={coffee.name}
+                price={coffee.price}
+                imgSrc={coffee.imgSrc}
+              />
+            ))}
           </header>
 
           <div className="cartResume">
             <div>
               <p>Total de itens</p>
-              <p>R$29,70</p>
+              <p>R${totalPrice.toFixed(2).toString().replace(".", ",")}</p>
             </div>
 
             <div>
@@ -78,7 +102,9 @@ export function Checkout() {
             <div>
               <strong>Total</strong>
 
-              <strong>R$33,20</strong>
+              <strong>
+                R${(totalPrice + 3.5).toFixed(2).toString().replace(".", ",")}
+              </strong>
             </div>
           </div>
 

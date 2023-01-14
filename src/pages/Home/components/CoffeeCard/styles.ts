@@ -81,6 +81,8 @@ export const CoffeeCardContainer = styled.div`
 
       div {
         display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 0.25rem;
         padding: 0.25rem 0;
         border-radius: 6px;
@@ -94,21 +96,10 @@ export const CoffeeCardContainer = styled.div`
 
           color: ${({ theme }) => theme["purple-300"]};
         }
-      }
 
-      input {
-        width: 1.5rem;
-        text-align: center;
-        background-color: transparent;
-        border: 0;
-
-        &::-webkit-outer-spin-button,
-        ::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
+        p {
+          padding: 0.25rem;
         }
-
-        -moz-appearance: textfield;
       }
 
       button[type="submit"] {

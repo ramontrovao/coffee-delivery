@@ -8,6 +8,7 @@ export interface Coffee {
   price: string;
   isPurchased: boolean;
   PurchasedDate?: Date;
+  imgSrc: string;
 }
 
 interface CoffeeState {
@@ -28,6 +29,12 @@ export const coffeeReducer = (state: CoffeeState, action: any) => {
           coffee.isPurchased = true;
           coffee.PurchasedDate = new Date();
         });
+      });
+    }
+
+    case ActionTypes.REMOVE_COFFEE: {
+      return produce(state, (draft) => {
+        draft.coffeeList.pop();
       });
     }
 

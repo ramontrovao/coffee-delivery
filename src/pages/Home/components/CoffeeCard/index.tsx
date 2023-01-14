@@ -1,6 +1,9 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
-import { FormEvent, ChangeEvent, useState } from "react";
+import { FormEvent, useState, useContext, useEffect } from "react";
 import { CoffeeCardContainer } from "./styles";
+import { CoffeeContext } from "../../../../context/CoffeeListContext";
+import { InputQuantity } from "../../../../components/InputQuantity";
+
 interface CoffeeCardProps {
   imgSrc: string;
   name: string;
@@ -26,12 +29,6 @@ export function CoffeeCard({
     }
   }
 
-  function handleChangeQuantity(event: ChangeEvent<HTMLInputElement>) {
-    if (coffeeQuantity < 99 && coffeeQuantity > 1) {
-      setcoffeeQuantity(Number(event.target.value));
-    }
-  }
-
   function handleDecreaseQuantityValue(event: FormEvent) {
     event.preventDefault();
 
@@ -39,6 +36,28 @@ export function CoffeeCard({
       setcoffeeQuantity((prev) => prev - 1);
     }
   }
+
+  const coffeeData = useContext(CoffeeContext);
+
+  function handleAddCoffeeSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const newCoffee = {
+      name,
+      quantity: coffeeQuantity,
+      price,
+      isPurchased: false,
+      imgSrc,
+    };
+
+    coffeeData.addNewCoffee(newCoffee);
+    console.log(coffeeData.coffeeState);
+  }
+
+  useEffect(
+    () => console.log(coffeeData.coffeeState),
+    [coffeeData.coffeeState]
+  );
 
   return (
     <CoffeeCardContainer>
@@ -63,22 +82,12 @@ export function CoffeeCard({
         <div>
           <span>R$</span> <strong>{price}</strong>
         </div>
-        <form>
-          <div>
-            <button onClick={handleIncreaseQuantityValue}>
-              <Plus weight="bold" />
-            </button>
-            <input
-              type="number"
-              onChange={handleChangeQuantity}
-              value={coffeeQuantity}
-              min="1"
-              max="99"
-            />
-            <button onClick={handleDecreaseQuantityValue}>
-              <Minus weight="bold" />
-            </button>
-          </div>
+        <form onSubmit={handleAddCoffeeSubmit}>
+          <InputQuantity
+            quantity={coffeeQuantity}
+            increase={handleIncreaseQuantityValue}
+            decrease={handleDecreaseQuantityValue}
+          />
 
           <button type="submit">
             <ShoppingCart weight="fill" size={22} />

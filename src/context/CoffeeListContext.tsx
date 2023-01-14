@@ -7,25 +7,25 @@ import {
 } from "../reducers/coffee/actions";
 
 interface CoffeeContextType {
-  purchaseCoffee: () => void;
-  removeCoffee: (data: Coffee) => void;
+  coffeeState: { coffeeList: Array<Coffee> };
+  purchaseCoffee: (data: Coffee) => void;
+  removeCoffee: (data: string) => void;
   addNewCoffee: (data: Coffee) => void;
 }
 
-interface CyclesContextProviderProps {
+interface CoffeeContextProviderProps {
   children: ReactNode;
 }
 
-export const CyclesContext = createContext({} as CoffeeContextType);
+export const CoffeeContext = createContext({} as CoffeeContextType);
 
-export const CyclesContextProvider = ({
+export const CoffeeContextProvider = ({
   children,
-}: CyclesContextProviderProps) => {
+}: CoffeeContextProviderProps) => {
   const [coffeeState, dispatch] = useReducer(
     coffeeReducer,
     {
       coffeeList: [],
-      coffeePurchased: [],
     },
     () => {
       const storedStateAsJSON = localStorage.getItem(
@@ -37,8 +37,7 @@ export const CyclesContextProvider = ({
       }
 
       return {
-        coffee: [],
-        coffeePurchased: [],
+        coffeeList: [],
       };
     }
   );
@@ -49,34 +48,28 @@ export const CyclesContextProvider = ({
     localStorage.setItem("@coffeDelivery: coffee-state-1.0.0", stateJSON);
   }, [coffeeState]);
 
-  const purchaseCoffee = () => {
-    dispatch(purchaseCoffeeAction());
+  const purchaseCoffee = (data: Coffee) => {
+    dispatch(purchaseCoffeeAction(data));
   };
 
   const addNewCoffee = (data: Coffee) => {
-    const newCoffee: Coffee = {
-      name: data.name,
-      quantity: data.quantity,
-      price: data.price,
-      isPurchased: data.isPurchased,
-    };
-
-    dispatch(addNewCoffeeAction(newCoffee));
+    dispatch(addNewCoffeeAction(data));
   };
 
-  const removeCoffee = (data: Coffee) => {
+  const removeCoffee = (data: string) => {
     dispatch(removeCoffeeAction(data));
   };
 
   return (
-    <CyclesContext.Provider
+    <CoffeeContext.Provider
       value={{
+        coffeeState,
         purchaseCoffee,
         addNewCoffee,
         removeCoffee,
       }}
     >
       {children}
-    </CyclesContext.Provider>
+    </CoffeeContext.Provider>
   );
 };
