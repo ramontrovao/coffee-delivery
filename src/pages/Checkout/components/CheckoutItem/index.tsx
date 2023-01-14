@@ -1,4 +1,4 @@
-import { FormEvent, useState, useContext } from "react";
+import { FormEvent, useState, useContext, useEffect } from "react";
 import { CoffeeContext } from "../../../../context/CoffeeListContext";
 import { InputQuantity } from "../../../../components/InputQuantity";
 import { CheckoutItemContainer } from "./styles";
@@ -10,14 +10,22 @@ interface CheckoutItemProps {
 }
 
 export function CheckoutItem({ name, price, imgSrc }: CheckoutItemProps) {
-  const [coffeeQuantity, setcoffeeQuantity] = useState(1);
+  const [coffeeQuantity, setcoffeeQuantity] = useState(8);
   const coffeeData = useContext(CoffeeContext);
+
+  useEffect(() => {
+    const coffee = coffeeData.coffeeState.coffeeList.find(
+      (coffee) => coffee.name === name
+    );
+
+    setcoffeeQuantity(coffee!.quantity);
+  }, [coffeeData]);
 
   function handleIncreaseQuantityValue(event: FormEvent) {
     event.preventDefault();
 
     if (coffeeQuantity < 99 && coffeeQuantity >= 1) {
-      setcoffeeQuantity((prev) => prev + 1);
+      coffeeData.changeCoffeeQuantity({ name, quantity: coffeeQuantity + 1 });
     }
   }
 
@@ -25,7 +33,7 @@ export function CheckoutItem({ name, price, imgSrc }: CheckoutItemProps) {
     event.preventDefault();
 
     if (coffeeQuantity <= 99 && coffeeQuantity > 1) {
-      setcoffeeQuantity((prev) => prev - 1);
+      coffeeData.changeCoffeeQuantity({ name, quantity: coffeeQuantity - 1 });
     }
   }
 

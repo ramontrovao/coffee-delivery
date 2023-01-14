@@ -4,6 +4,7 @@ import {
   addNewCoffeeAction,
   removeCoffeeAction,
   purchaseCoffeeAction,
+  changeCoffeeQuantityAction,
 } from "../reducers/coffee/actions";
 
 interface CoffeeContextType {
@@ -11,6 +12,7 @@ interface CoffeeContextType {
   purchaseCoffee: (data: Coffee) => void;
   removeCoffee: (data: string) => void;
   addNewCoffee: (data: Coffee) => void;
+  changeCoffeeQuantity: (data: {}) => void;
 }
 
 interface CoffeeContextProviderProps {
@@ -60,6 +62,10 @@ export const CoffeeContextProvider = ({
     dispatch(removeCoffeeAction(data));
   };
 
+  const changeCoffeeQuantity = (data: {}) => {
+    dispatch(changeCoffeeQuantityAction(data));
+  };
+
   return (
     <CoffeeContext.Provider
       value={{
@@ -67,6 +73,7 @@ export const CoffeeContextProvider = ({
         purchaseCoffee,
         addNewCoffee,
         removeCoffee,
+        changeCoffeeQuantity,
       }}
     >
       {children}

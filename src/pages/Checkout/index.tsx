@@ -10,16 +10,28 @@ export function Checkout() {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    if (coffeeList.length > 0) {
-      let prices = coffeeList.map((coffee) => {
-        const priceBRL = coffee.price.replace(",", ".");
+    type priceAndquantitiesType = {
+      price: string;
+      quantity: number;
+    };
 
-        return Number(priceBRL);
-      });
+    const pricesAndQuantities: Array<priceAndquantitiesType> = [];
 
+    if (coffeeList.length >= 0) {
       setTotalPrice(0);
 
-      prices.map((price) => setTotalPrice((prev) => prev + price));
+      coffeeList.map(({ price, quantity }) => {
+        pricesAndQuantities.push({ price, quantity });
+      });
+
+      pricesAndQuantities.map((priceAndQuantity) =>
+        setTotalPrice(
+          (prev) =>
+            prev +
+            Number(priceAndQuantity.price.replace(",", ".")) *
+              priceAndQuantity.quantity
+        )
+      );
     }
   }, [coffeeList]);
 
