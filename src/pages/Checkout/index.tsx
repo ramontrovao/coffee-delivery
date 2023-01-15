@@ -91,13 +91,21 @@ export function Checkout() {
 
         <section className="cartSection">
           <header>
-            {coffeeData.coffeeState.coffeeList.map((coffee) => (
-              <CheckoutItem
-                name={coffee.name}
-                price={coffee.price}
-                imgSrc={coffee.imgSrc}
-              />
-            ))}
+            {coffeeList.length > 0 &&
+              coffeeData.coffeeState.coffeeList.map((coffee) => (
+                <CheckoutItem
+                  name={coffee.name}
+                  price={coffee.price}
+                  imgSrc={coffee.imgSrc}
+                />
+              ))}
+
+            {coffeeList.length <= 0 && (
+              <p className="noItemsFound">
+                Nenhum item no carrinho. Veja nosso catálogo clicando{" "}
+                <Link to={"/"}>aqui</Link>
+              </p>
+            )}
           </header>
 
           <div className="cartResume">

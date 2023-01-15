@@ -6,6 +6,13 @@ export const CheckoutItemContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme["gray-400"]};
   padding: 1rem;
   margin-bottom: 1rem;
+  margin-right: 1rem;
+
+  * {
+    @media (max-width: 425px) {
+      font-size: 95%;
+    }
+  }
 
   img {
     width: 4rem;
@@ -14,7 +21,8 @@ export const CheckoutItemContainer = styled.div`
 
   .nameAndPriceWrapper {
     display: flex;
-    gap: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .removeWrapper {

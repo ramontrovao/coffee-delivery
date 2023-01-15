@@ -101,6 +101,16 @@ export const CheckoutContainer = styled.form`
   .cartSection {
     border-radius: 6px 44px 6px 44px;
 
+    .noItemsFound {
+      margin: 2rem;
+
+      a {
+        color: ${({ theme }) => theme["yellow-200"]};
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+
     .cartResume {
       display: flex;
       flex-direction: column;

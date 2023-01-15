@@ -31,10 +31,6 @@ export const SuccessContainer = styled.div`
 
     img {
       width: 30rem;
-
-      @media (max-width: 768px) {
-        display: none;
-      }
     }
   }
 `;
