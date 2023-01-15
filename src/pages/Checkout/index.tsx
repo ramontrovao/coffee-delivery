@@ -1,13 +1,61 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 import { CoffeeContext } from "../../context/CoffeeListContext";
-import { CheckoutContainer } from "./styles";
+import { AddressContext } from "../../context/AddressContext";
+import { CheckoutContainer, PaymentOptionButton } from "./styles";
 import { CheckoutItem } from "./components/CheckoutItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+const newAddressFormValidationSchema = zod.object({
+  cep: zod
+    .string()
+    .min(8, "O CEP precisa ter 8 digitos!")
+    .max(8, "O CEP precisa ter 8 digitos!"),
+  street: zod.string(),
+  number: zod.string(),
+  complement: zod.string(),
+  district: zod.string(),
+  city: zod.string(),
+  uf: zod
+    .string()
+    .min(2, "o UF precisa ter 2 digitos!")
+    .max(2, "o UF precisa ter 2 digitos!"),
+});
+
+type newAddressFormData = zod.infer<typeof newAddressFormValidationSchema>;
 
 export function Checkout() {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { changeAddress } = useContext(AddressContext);
   const coffeeData = useContext(CoffeeContext);
   const coffeeList = coffeeData.coffeeState.coffeeList;
-  const [totalPrice, setTotalPrice] = useState(0);
+
+  const newAddressForm = useForm<newAddressFormData>({
+    resolver: zodResolver(newAddressFormValidationSchema),
+    defaultValues: {
+      cep: "",
+      uf: "",
+      city: "",
+      district: "",
+      street: "",
+      number: "",
+      complement: "",
+    },
+  });
+
+  const { register, handleSubmit, reset } = newAddressForm;
+  const navigate = useNavigate();
+
+  const handleSetAddress = (data: newAddressFormData) => {
+    reset();
+
+    changeAddress(data);
+
+    navigate("/success");
+  };
 
   useEffect(() => {
     type priceAndquantitiesType = {
@@ -36,7 +84,7 @@ export function Checkout() {
   }, [coffeeList]);
 
   return (
-    <CheckoutContainer>
+    <CheckoutContainer onSubmit={handleSubmit(handleSetAddress)}>
       <div className="wrapper1">
         <h3>Complete seu pedido</h3>
 
@@ -49,22 +97,30 @@ export function Checkout() {
 
           <main>
             <div>
-              <input type="text" placeholder="CEP" />
+              <input type="text" placeholder="CEP" {...register("cep")} />
             </div>
 
             <div>
-              <input type="text" placeholder="Rua" />
+              <input type="text" placeholder="Rua" {...register("street")} />
             </div>
 
             <div className="input-wrapper1">
-              <input type="text" placeholder="Número" />
-              <input type="text" placeholder="Complemento" />
+              <input type="text" placeholder="Número" {...register("number")} />
+              <input
+                type="text"
+                placeholder="Complemento"
+                {...register("complement")}
+              />
             </div>
 
             <div className="input-wrapper2">
-              <input type="text" placeholder="Bairro" />
-              <input type="text" placeholder="Cidade" />
-              <input type="text" placeholder="UF" />
+              <input
+                type="text"
+                placeholder="Bairro"
+                {...register("district")}
+              />
+              <input type="text" placeholder="Cidade" {...register("city")} />
+              <input type="text" placeholder="UF" {...register("uf")} />
             </div>
           </main>
         </section>
@@ -79,9 +135,22 @@ export function Checkout() {
           </header>
 
           <main>
-            <button>CARTÃO DE CRÉDITO</button>
-            <button>CARTÃO DE DÉBITO</button>
-            <button>DINHEIRO</button>
+            <RadioGroup.Root
+              onValueChange={(method: string) =>
+                coffeeData.setPaymentMethod(method)
+              }
+              defaultValue="Dinheiro"
+            >
+              <PaymentOptionButton value="Cartão de crédito">
+                CARTÃO DE CRÉDITO
+              </PaymentOptionButton>
+              <PaymentOptionButton value="Cartão de débito">
+                CARTÃO DE DÉBITO
+              </PaymentOptionButton>
+              <PaymentOptionButton value="Dinheiro">
+                DINHEIRO
+              </PaymentOptionButton>
+            </RadioGroup.Root>
           </main>
         </section>
       </div>
@@ -129,9 +198,7 @@ export function Checkout() {
           </div>
 
           <div className="cartSubmit">
-            <Link to="/success">
-              <button type="submit">CONFIRMAR PEDIDO</button>
-            </Link>
+            <button type="submit">CONFIRMAR PEDIDO</button>
           </div>
         </section>
       </div>

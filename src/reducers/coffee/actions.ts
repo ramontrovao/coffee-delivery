@@ -5,6 +5,7 @@ export enum ActionTypes {
   REMOVE_COFFEE = "REMOVE_COFFEE",
   PURCHASE_COFFEE = "PURCHASE_COFFEE",
   CHANGE_COFFEE_QUANTITY = "CHANGE_COFFEE_QUANTITY",
+  SET_PAYMENT_METHOD = "SET_PAYMENT_METHOD",
 }
 
 export const addNewCoffeeAction = (newCoffee: Coffee) => {
@@ -39,6 +40,15 @@ export const changeCoffeeQuantityAction = (nameAndQuantity: {}) => {
     type: ActionTypes.CHANGE_COFFEE_QUANTITY,
     payload: {
       nameAndQuantity,
+    },
+  };
+};
+
+export const setPaymentMethodAction = (method: string) => {
+  return {
+    type: ActionTypes.SET_PAYMENT_METHOD,
+    payload: {
+      method,
     },
   };
 };

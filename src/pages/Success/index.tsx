@@ -1,6 +1,19 @@
 import { SuccessContainer } from "./styles";
+import { useContext, useEffect } from "react";
+import { AddressContext } from "../../context/AddressContext";
+import { CoffeeContext } from "../../context/CoffeeListContext";
 
 export function Success() {
+  const {
+    address: { city, district, street, number, uf },
+  } = useContext(AddressContext);
+
+  const {
+    coffeeState: { paymentMethod },
+  } = useContext(CoffeeContext);
+
+  useEffect(() => console.log(paymentMethod), []);
+
   return (
     <SuccessContainer>
       <header>
@@ -12,8 +25,11 @@ export function Success() {
         <div className="orderInfos">
           <div>
             <p>
-              Entrega em <strong>Rua João Daniel Martinelli, 102</strong> <br />{" "}
-              Farrapos - Porto Alegre, RS
+              Entrega em{" "}
+              <strong>
+                {street}, {number}
+              </strong>{" "}
+              <br /> {district} - {city}, {uf}
             </p>
           </div>
 
@@ -27,7 +43,7 @@ export function Success() {
           <div>
             <p>
               Pagamento na entrega <br />
-              <strong>Cartão de crédito</strong>
+              <strong>{paymentMethod}</strong>
             </p>
           </div>
         </div>

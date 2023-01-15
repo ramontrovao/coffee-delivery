@@ -13,6 +13,7 @@ export interface Coffee {
 
 interface CoffeeState {
   coffeeList: Coffee[];
+  paymentMethod: string;
 }
 
 export const coffeeReducer = (state: CoffeeState, action: any) => {
@@ -49,6 +50,12 @@ export const coffeeReducer = (state: CoffeeState, action: any) => {
         );
 
         draft.coffeeList[index].quantity = coffeeToChange.quantity;
+      });
+    }
+
+    case ActionTypes.SET_PAYMENT_METHOD: {
+      return produce(state, (draft) => {
+        draft.paymentMethod = action.payload.method;
       });
     }
 

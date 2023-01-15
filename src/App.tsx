@@ -5,14 +5,17 @@ import { Router } from "./router";
 import { GlobalStyle } from "./styles/global";
 import { DefaultTheme } from "./styles/themes/default";
 import { CoffeeContextProvider } from "./context/CoffeeListContext";
+import { AddressContextProvider } from "./context/AddressContext";
 
 function App() {
   return (
     <ThemeProvider theme={DefaultTheme}>
       <CoffeeContextProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <AddressContextProvider>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </AddressContextProvider>
       </CoffeeContextProvider>
       <GlobalStyle />
     </ThemeProvider>

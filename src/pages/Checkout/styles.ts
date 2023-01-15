@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Item } from "@radix-ui/react-radio-group";
 
 export const CheckoutContainer = styled.form`
   padding: 3rem;
@@ -76,24 +77,13 @@ export const CheckoutContainer = styled.form`
 
   .paymentSection {
     main {
-      display: flex;
-      gap: 1rem;
+      div {
+        display: flex;
+        gap: 1rem;
 
-      button {
-        text-align: left;
-        min-width: 30%;
-        padding: 1rem;
-        background-color: ${({ theme }) => theme["gray-300"]};
-        color: ${({ theme }) => theme["gray-600"]};
-        border: 0;
-        border-radius: 6px;
-        cursor: pointer;
-
-        font-size: 0.9rem;
-      }
-
-      @media (max-width: 768px) {
-        flex-direction: column;
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
       }
     }
   }
@@ -145,5 +135,22 @@ export const CheckoutContainer = styled.form`
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 0.25rem;
+  }
+`;
+
+export const PaymentOptionButton = styled(Item)`
+  text-align: left;
+  min-width: 30%;
+  padding: 1rem;
+  background-color: ${({ theme }) => theme["gray-300"]};
+  color: ${({ theme }) => theme["gray-600"]};
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+
+  font-size: 0.9rem;
+
+  &[data-state="checked"] {
+    background-color: ${({ theme }) => theme["purple-200"]};
   }
 `;

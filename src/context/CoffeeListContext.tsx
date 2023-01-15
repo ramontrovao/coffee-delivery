@@ -5,10 +5,13 @@ import {
   removeCoffeeAction,
   purchaseCoffeeAction,
   changeCoffeeQuantityAction,
+  setPaymentMethodAction,
 } from "../reducers/coffee/actions";
 
 interface CoffeeContextType {
-  coffeeState: { coffeeList: Array<Coffee> };
+  coffeeState: { coffeeList: Array<Coffee>; paymentMethod: string };
+
+  setPaymentMethod: (data: string) => void;
   purchaseCoffee: (data: Coffee) => void;
   removeCoffee: (data: string) => void;
   addNewCoffee: (data: Coffee) => void;
@@ -28,6 +31,7 @@ export const CoffeeContextProvider = ({
     coffeeReducer,
     {
       coffeeList: [],
+      paymentMethod: "",
     },
     () => {
       const storedStateAsJSON = localStorage.getItem(
@@ -40,6 +44,7 @@ export const CoffeeContextProvider = ({
 
       return {
         coffeeList: [],
+        paymentMethod: "",
       };
     }
   );
@@ -66,10 +71,15 @@ export const CoffeeContextProvider = ({
     dispatch(changeCoffeeQuantityAction(data));
   };
 
+  const setPaymentMethod = (data: string) => {
+    dispatch(setPaymentMethodAction(data));
+  };
+
   return (
     <CoffeeContext.Provider
       value={{
         coffeeState,
+        setPaymentMethod,
         purchaseCoffee,
         addNewCoffee,
         removeCoffee,
