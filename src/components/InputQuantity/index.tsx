@@ -15,12 +15,12 @@ export function InputQuantity({
 }: InputQuantityProps) {
   return (
     <InputQuantityContainer>
-      <button onClick={increase}>
-        <Plus weight="bold" />
-      </button>
-      <p>{quantity}</p>
       <button onClick={decrease}>
         <Minus weight="bold" />
+      </button>
+      <p>{quantity}</p>
+      <button onClick={increase}>
+        <Plus weight="bold" />
       </button>
     </InputQuantityContainer>
   );
