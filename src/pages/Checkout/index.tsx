@@ -1,5 +1,5 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useContext, useEffect, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import * as RadioGroup from "@radix-ui/react-radio-group";
@@ -29,6 +29,7 @@ type newAddressFormData = zod.infer<typeof newAddressFormValidationSchema>;
 
 export function Checkout() {
   const [totalPrice, setTotalPrice] = useState(0);
+  const [canSubmit, setCanSubmit] = useState(true);
   const { changeAddress } = useContext(AddressContext);
   const coffeeData = useContext(CoffeeContext);
   const coffeeList = coffeeData.coffeeState.coffeeList;
@@ -46,8 +47,18 @@ export function Checkout() {
     },
   });
 
-  const { register, handleSubmit, reset } = newAddressForm;
+  const { register, handleSubmit, reset, watch } = newAddressForm;
   const navigate = useNavigate();
+
+  const addressFormFields = {
+    cep: watch("cep"),
+    uf: watch("uf"),
+    city: watch("city"),
+    district: watch("district"),
+    street: watch("street"),
+    number: watch("number"),
+    complement: watch("complement"),
+  };
 
   const handleSetAddress = (data: newAddressFormData) => {
     reset();
@@ -82,6 +93,26 @@ export function Checkout() {
       );
     }
   }, [coffeeList]);
+
+  useEffect(() => {
+    const { cep, city, complement, district, number, street, uf } =
+      addressFormFields;
+
+    if (
+      cep === "" ||
+      city === "" ||
+      complement === "" ||
+      district === "" ||
+      number === "" ||
+      street === "" ||
+      uf === "" ||
+      coffeeList.length === 0
+    ) {
+      setCanSubmit(true);
+    } else {
+      setCanSubmit(false);
+    }
+  }, [addressFormFields]);
 
   return (
     <CheckoutContainer onSubmit={handleSubmit(handleSetAddress)}>
@@ -198,7 +229,9 @@ export function Checkout() {
           </div>
 
           <div className="cartSubmit">
-            <button type="submit">CONFIRMAR PEDIDO</button>
+            <button type="submit" disabled={canSubmit}>
+              CONFIRMAR PEDIDO
+            </button>
           </div>
         </section>
       </div>
