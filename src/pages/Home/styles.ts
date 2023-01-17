@@ -11,6 +11,7 @@ export const AboutCoffeeContainer = styled.div`
   gap: 2rem;
   padding: 12.5% 4% 8% 8%;
   background-image: url("../assets/homeBg.svg");
+  background-size: cover;
 
   .coffeInfosDiv {
     width: 60%;
