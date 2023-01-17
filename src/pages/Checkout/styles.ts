@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { Item } from "@radix-ui/react-radio-group";
 
 export const PaymentOptionButton = styled(Item)`
-  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   min-width: 30%;
   padding: 1rem;
   background-color: ${({ theme }) => theme["gray-300"]};
@@ -10,16 +12,27 @@ export const PaymentOptionButton = styled(Item)`
   border: 0;
   border-radius: 6px;
   cursor: pointer;
-
   font-size: 0.9rem;
+  transition: background-color 0.3s;
+
+  svg {
+    color: ${({ theme }) => theme["purple-200"]};
+  }
 
   &[data-state="checked"] {
-    background-color: ${({ theme }) => theme["purple-200"]};
+    color: ${({ theme }) => theme["gray-900"]};
+    background-color: ${({ theme }) => theme["purple-100"]};
+    border: 1px solid ${({ theme }) => theme["purple-200"]};
+  }
+
+  &[data-state="unchecked"]:hover {
+    background-color: ${({ theme }) => theme["gray-400"]};
   }
 `;
 
 export const CheckoutContainer = styled.form`
-  padding: 3rem;
+  background-color: ${({ theme }) => theme["background"]};
+  padding: 10% 3%;
   display: flex;
   gap: 2rem;
 
@@ -52,11 +65,24 @@ export const CheckoutContainer = styled.form`
   .addressSection,
   .paymentSection {
     header {
+      display: flex;
+      gap: 0.5rem;
       margin-bottom: 2rem;
+
+      strong {
+        font-size: 1.25rem;
+        color: ${({ theme }) => theme["gray-800"]};
+      }
     }
   }
 
   .addressSection {
+    header {
+      svg {
+        color: ${({ theme }) => theme["yellow-300"]};
+      }
+    }
+
     input {
       padding: 0.75rem;
       background-color: ${({ theme }) => theme["gray-300"]};
@@ -76,10 +102,6 @@ export const CheckoutContainer = styled.form`
     .input-wrapper1 {
       display: flex;
       gap: 1rem;
-
-      input:nth-child(2) {
-        width: 100%;
-      }
     }
 
     .input-wrapper2 {
@@ -93,6 +115,12 @@ export const CheckoutContainer = styled.form`
   }
 
   .paymentSection {
+    header {
+      svg {
+        color: ${({ theme }) => theme["purple-300"]};
+      }
+    }
+
     main {
       div {
         display: flex;

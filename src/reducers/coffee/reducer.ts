@@ -20,7 +20,28 @@ export const coffeeReducer = (state: CoffeeState, action: any) => {
   switch (action.type) {
     case ActionTypes.ADD_NEW_COFFEE: {
       return produce(state, (draft) => {
-        draft.coffeeList.push(action.payload.newCoffee);
+        const copy = [...state.coffeeList];
+        const newCoffee = action.payload.newCoffee;
+
+        if (copy.length > 0) {
+          let coffeeAlreadyExists: boolean = false;
+          let index: number = 0;
+
+          copy.map((coffee) => {
+            if (coffee.name === newCoffee.name) {
+              coffeeAlreadyExists = true;
+              index = copy.indexOf(coffee);
+            }
+          });
+
+          if (coffeeAlreadyExists) {
+            draft.coffeeList[index].quantity += newCoffee.quantity;
+          } else {
+            draft.coffeeList.push(newCoffee);
+          }
+        } else {
+          draft.coffeeList.push(newCoffee);
+        }
       });
     }
 

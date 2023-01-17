@@ -48,12 +48,20 @@ export const CheckoutItemContainer = styled.div`
     }
 
     .removeCoffeeButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
       padding: 0.1rem 1rem;
       border-radius: 6px;
       background-color: ${({ theme }) => theme["gray-300"]};
       border: 0;
       cursor: pointer;
       font-size: 0.75rem;
+
+      svg {
+        color: ${({ theme }) => theme["purple-300"]};
+      }
     }
   }
 `;

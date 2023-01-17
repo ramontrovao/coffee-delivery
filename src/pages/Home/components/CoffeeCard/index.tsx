@@ -42,6 +42,8 @@ export function CoffeeCard({
   function handleAddCoffeeSubmit(event: FormEvent) {
     event.preventDefault();
 
+    alert("Produto adicionado!");
+
     const newCoffee = {
       name,
       quantity: coffeeQuantity,
@@ -51,13 +53,7 @@ export function CoffeeCard({
     };
 
     coffeeData.addNewCoffee(newCoffee);
-    console.log(coffeeData.coffeeState);
   }
-
-  useEffect(
-    () => console.log(coffeeData.coffeeState),
-    [coffeeData.coffeeState]
-  );
 
   return (
     <CoffeeCardContainer>

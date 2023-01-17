@@ -2,6 +2,7 @@ import { FormEvent, useState, useContext, useEffect } from "react";
 import { CoffeeContext } from "../../../../context/CoffeeListContext";
 import { InputQuantity } from "../../../../components/InputQuantity";
 import { CheckoutItemContainer } from "./styles";
+import { Trash } from "phosphor-react";
 
 interface CheckoutItemProps {
   name: string;
@@ -62,7 +63,7 @@ export function CheckoutItem({ name, price, imgSrc }: CheckoutItemProps) {
           />
 
           <button className="removeCoffeeButton" onClick={onRemoveCoffee}>
-            REMOVER
+            <Trash size={16} /> REMOVER
           </button>
         </div>
       </div>

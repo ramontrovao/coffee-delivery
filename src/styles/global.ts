@@ -9,11 +9,6 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         background-color: ${({ theme }) => theme["background"]};
-        margin: 0 8%;
-
-        @media (max-width: 768px) {
-            margin: 0;
-        }
     }
 
     body, input, textarea, button {

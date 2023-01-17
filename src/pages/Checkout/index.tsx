@@ -8,6 +8,13 @@ import { AddressContext } from "../../context/AddressContext";
 import { CheckoutContainer, PaymentOptionButton } from "./styles";
 import { CheckoutItem } from "./components/CheckoutItem";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPin,
+  Money,
+} from "phosphor-react";
 
 const newAddressFormValidationSchema = zod.object({
   cep: zod
@@ -27,7 +34,7 @@ const newAddressFormValidationSchema = zod.object({
 
 type newAddressFormData = zod.infer<typeof newAddressFormValidationSchema>;
 
-export function Checkout() {
+export const Checkout: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [canSubmit, setCanSubmit] = useState(true);
   const { changeAddress } = useContext(AddressContext);
@@ -61,10 +68,9 @@ export function Checkout() {
   };
 
   const handleSetAddress = (data: newAddressFormData) => {
-    reset();
-
     changeAddress(data);
 
+    reset();
     navigate("/success");
   };
 
@@ -121,9 +127,15 @@ export function Checkout() {
 
         <section className="addressSection">
           <header>
-            <p>Endereço de entrega</p>
+            <div>
+              <MapPin size={22} />
+            </div>
 
-            <p>Informe o endereço onde deseja receber seu pedido</p>
+            <div>
+              <strong>Endereço de entrega</strong>
+
+              <p>Informe o endereço onde deseja receber seu pedido</p>
+            </div>
           </header>
 
           <main>
@@ -158,11 +170,17 @@ export function Checkout() {
 
         <section className="paymentSection">
           <header>
-            <p>Pagamento</p>
+            <div>
+              <CurrencyDollar size={22} />
+            </div>
 
-            <p>
-              O pagamento é feito na entrega. Escolha a forma que deseja pagar
-            </p>
+            <div>
+              <strong>Pagamento</strong>
+
+              <p>
+                O pagamento é feito na entrega. Escolha a forma que deseja pagar
+              </p>
+            </div>
           </header>
 
           <main>
@@ -173,13 +191,13 @@ export function Checkout() {
               defaultValue="Dinheiro"
             >
               <PaymentOptionButton value="Cartão de crédito">
-                CARTÃO DE CRÉDITO
+                <CreditCard size={16} /> CARTÃO DE CRÉDITO
               </PaymentOptionButton>
               <PaymentOptionButton value="Cartão de débito">
-                CARTÃO DE DÉBITO
+                <Bank size={16} /> CARTÃO DE DÉBITO
               </PaymentOptionButton>
               <PaymentOptionButton value="Dinheiro">
-                DINHEIRO
+                <Money size={16} /> DINHEIRO
               </PaymentOptionButton>
             </RadioGroup.Root>
           </main>
@@ -237,4 +255,4 @@ export function Checkout() {
       </div>
     </CheckoutContainer>
   );
-}
+};

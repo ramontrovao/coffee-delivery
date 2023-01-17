@@ -7,8 +7,10 @@ export const AboutCoffeeContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  min-height: 70vh;
+  min-height: 85vh;
   gap: 2rem;
+  padding: 12.5% 4% 8% 8%;
+  background-image: url("../assets/homeBg.svg");
 
   .coffeInfosDiv {
     width: 60%;
@@ -76,6 +78,9 @@ export const AboutCoffeeContainer = styled.div`
 `;
 
 export const CatalogContainer = styled.div`
+  padding: 4% 8%;
+  background-color: ${({ theme }) => theme["background"]};
+
   #title {
     font-family: "Baloo 2";
     font-size: 2rem;
