@@ -13,6 +13,7 @@ export interface Coffee {
 
 interface CoffeeState {
   coffeeList: Coffee[];
+  coffeePurchased: Coffee[];
   paymentMethod: string;
 }
 
@@ -51,6 +52,11 @@ export const coffeeReducer = (state: CoffeeState, action: any) => {
           coffee.isPurchased = true;
           coffee.PurchasedDate = new Date();
         });
+
+        const copy = [...state.coffeeList];
+
+        draft.coffeePurchased = copy;
+        draft.coffeeList = [];
       });
     }
 

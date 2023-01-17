@@ -88,15 +88,6 @@ export const CoffeeCardContainer = styled.div`
         border-radius: 6px;
         background-color: ${({ theme }) => theme["gray-300"]};
 
-        button {
-          padding: 0.25rem;
-          background-color: transparent;
-          border: 0;
-          cursor: pointer;
-
-          color: ${({ theme }) => theme["purple-300"]};
-        }
-
         p {
           padding: 0.25rem;
         }
@@ -112,6 +103,11 @@ export const CoffeeCardContainer = styled.div`
         border: 0;
         border-radius: 0.375rem;
         padding: 0.5rem;
+        transition: background-color 0.4s;
+
+        &:hover {
+          background-color: ${({ theme }) => theme["purple-200"]};
+        }
       }
     }
   }

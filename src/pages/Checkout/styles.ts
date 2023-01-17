@@ -36,29 +36,20 @@ export const CheckoutContainer = styled.form`
   display: flex;
   gap: 2rem;
 
-  input[type="number"] {
-    -moz-appearance: textfield;
-
-    &::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-
   .wrapper1 {
-    min-width: 40rem;
+    width: 60%;
 
-    @media (max-width: 768px) {
-      min-width: 100%;
+    @media (max-width: 1024px) {
+      margin-top: 7.5rem;
+      width: 100%;
     }
   }
 
   .wrapper2 {
-    min-width: 28rem;
+    width: 40%;
 
-    @media (max-width: 768px) {
-      min-width: 100%;
+    @media (max-width: 1024px) {
+      width: 100%;
     }
   }
 
@@ -93,34 +84,17 @@ export const CheckoutContainer = styled.form`
       }
     }
 
-    input {
-      padding: 0.75rem;
-      background-color: ${({ theme }) => theme["gray-300"]};
-      border: 1px solid ${({ theme }) => theme["gray-400"]};
-      border-radius: 4px;
-    }
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
 
+      input {
+        min-width: 80%;
+      }
+    }
     div {
       margin-bottom: 1rem;
-    }
-
-    .input-wrapper1,
-    .input-wrapper2 {
-      flex-wrap: wrap;
-    }
-
-    .input-wrapper1 {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .input-wrapper2 {
-      display: flex;
-      gap: 1rem;
-
-      input:nth-child(3) {
-        width: 20%;
-      }
     }
   }
 
@@ -144,6 +118,7 @@ export const CheckoutContainer = styled.form`
   }
 
   .cartSection {
+    width: 100%;
     border-radius: 6px 44px 6px 44px;
 
     .noItemsFound {
@@ -202,8 +177,12 @@ export const CheckoutContainer = styled.form`
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     flex-direction: column;
     padding: 0.25rem;
+
+    input {
+      width: 100%;
+    }
   }
 `;

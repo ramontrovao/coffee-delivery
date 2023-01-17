@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import * as RadioGroup from "@radix-ui/react-radio-group";
@@ -15,6 +15,7 @@ import {
   MapPin,
   Money,
 } from "phosphor-react";
+import { InputForm } from "../../components/InputForm";
 
 const newAddressFormValidationSchema = zod.object({
   cep: zod
@@ -22,14 +23,17 @@ const newAddressFormValidationSchema = zod.object({
     .min(8, "O CEP precisa ter 8 digitos!")
     .max(8, "O CEP precisa ter 8 digitos!"),
   street: zod.string(),
-  number: zod.string(),
+  number: zod
+    .string()
+    .min(1, "Um número residencial tem no mínimo 1 digito!")
+    .max(5, "Um número residencial tem no máximo 5 digitos!"),
   complement: zod.string(),
   district: zod.string(),
   city: zod.string(),
   uf: zod
     .string()
-    .min(2, "o UF precisa ter 2 digitos!")
-    .max(2, "o UF precisa ter 2 digitos!"),
+    .min(2, "o UF precisa ter 2 dígitos!")
+    .max(2, "o UF precisa ter 2 dígitos!"),
 });
 
 type newAddressFormData = zod.infer<typeof newAddressFormValidationSchema>;
@@ -54,7 +58,13 @@ export const Checkout: React.FC = () => {
     },
   });
 
-  const { register, handleSubmit, reset, watch } = newAddressForm;
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+    reset,
+    watch,
+  } = newAddressForm;
   const navigate = useNavigate();
 
   const addressFormFields = {
@@ -69,6 +79,7 @@ export const Checkout: React.FC = () => {
 
   const handleSetAddress = (data: newAddressFormData) => {
     changeAddress(data);
+    coffeeData.purchaseCoffee();
 
     reset();
     navigate("/success");
@@ -139,37 +150,42 @@ export const Checkout: React.FC = () => {
           </header>
 
           <main>
-            <div>
-              <input type="number" placeholder="CEP" {...register("cep")} />
-            </div>
+            <InputForm
+              error={errors["cep"]?.message}
+              type="number"
+              placeholder="CEP"
+              {...register("cep")}
+            />
 
-            <div>
-              <input type="text" placeholder="Rua" {...register("street")} />
-            </div>
+            <InputForm type="text" placeholder="Rua" {...register("street")} />
 
-            <div className="input-wrapper1">
-              <input
-                type="number"
-                placeholder="Número"
-                maxLength={5}
-                {...register("number")}
-              />
-              <input
-                type="text"
-                placeholder="Complemento"
-                {...register("complement")}
-              />
-            </div>
+            <InputForm
+              error={errors["number"]?.message}
+              type="number"
+              placeholder="Número"
+              {...register("number")}
+            />
 
-            <div className="input-wrapper2">
-              <input
-                type="text"
-                placeholder="Bairro"
-                {...register("district")}
-              />
-              <input type="text" placeholder="Cidade" {...register("city")} />
-              <input type="text" placeholder="UF" {...register("uf")} />
-            </div>
+            <InputForm
+              type="text"
+              placeholder="Bairro"
+              {...register("district")}
+            />
+
+            <InputForm type="text" placeholder="Cidade" {...register("city")} />
+
+            <InputForm
+              error={errors["uf"]?.message}
+              type="text"
+              placeholder="UF"
+              {...register("uf")}
+            />
+
+            <InputForm
+              type="text"
+              placeholder="Complemento"
+              {...register("complement")}
+            />
           </main>
         </section>
 

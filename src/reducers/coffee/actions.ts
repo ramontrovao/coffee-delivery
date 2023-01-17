@@ -26,12 +26,9 @@ export const removeCoffeeAction = (coffeeToRemove: string) => {
   };
 };
 
-export const purchaseCoffeeAction = (coffeeToPurchase: Coffee) => {
+export const purchaseCoffeeAction = () => {
   return {
     type: ActionTypes.PURCHASE_COFFEE,
-    payload: {
-      coffeeToPurchase,
-    },
   };
 };
 

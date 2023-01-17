@@ -2,15 +2,39 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
   position: fixed;
   padding: 1.75rem 2rem;
 
   nav {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+
+    a {
+      text-decoration: none;
+    }
+
+    div {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .NumOnTop {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.6rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 8px;
+      margin-left: -1rem;
+      font-size: 0.8rem;
+
+      background-color: ${({ theme }) => theme["yellow-300"]};
+      color: ${({ theme }) => theme["white"]};
+      font-weight: bold;
+    }
   }
 `;
 

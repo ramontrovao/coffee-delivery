@@ -8,12 +8,6 @@ export const CheckoutItemContainer = styled.div`
   margin-bottom: 1rem;
   margin-right: 1rem;
 
-  * {
-    @media (max-width: 425px) {
-      font-size: 95%;
-    }
-  }
-
   img {
     width: 4rem;
     height: 4rem;
@@ -28,24 +22,7 @@ export const CheckoutItemContainer = styled.div`
   .removeWrapper {
     display: flex;
     gap: 1rem;
-    margin: 0.5rem;
-
-    div {
-      display: flex;
-      gap: 0.25rem;
-      padding: 0.1rem 0;
-      border-radius: 6px;
-      background-color: ${({ theme }) => theme["gray-300"]};
-
-      button {
-        padding: 0.25rem;
-        background-color: transparent;
-        border: 0;
-        cursor: pointer;
-
-        color: ${({ theme }) => theme["purple-300"]};
-      }
-    }
+    margin-top: 0.5rem;
 
     .removeCoffeeButton {
       display: flex;
@@ -63,5 +40,9 @@ export const CheckoutItemContainer = styled.div`
         color: ${({ theme }) => theme["purple-300"]};
       }
     }
+  }
+
+  @media (max-width: 425px) {
+    margin-left: -2.5rem;
   }
 `;
