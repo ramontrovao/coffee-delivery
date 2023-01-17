@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SuccessContainer = styled.div`
-  padding: 1.5rem;
+  padding: 10.5% 8%;
 
   main {
     display: flex;
@@ -31,6 +31,10 @@ export const SuccessContainer = styled.div`
 
     img {
       width: 30rem;
+
+      @media (max-width: 425px) {
+        display: none;
+      }
     }
   }
 `;

@@ -36,6 +36,16 @@ export const CheckoutContainer = styled.form`
   display: flex;
   gap: 2rem;
 
+  input[type="number"] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
   .wrapper1 {
     min-width: 40rem;
 
@@ -173,11 +183,20 @@ export const CheckoutContainer = styled.form`
         background-color: ${({ theme }) => theme["yellow-200"]};
         color: ${({ theme }) => theme["white"]};
         font-weight: bold;
+        transition: background-color 0.4s;
 
         &:disabled {
           background-color: ${({ theme }) => theme["gray-400"]};
           color: ${({ theme }) => theme["gray-500"]};
           cursor: not-allowed;
+
+          &:hover {
+            background-color: ${({ theme }) => theme["gray-400"]};
+          }
+        }
+
+        &:hover {
+          background-color: ${({ theme }) => theme["yellow-300"]};
         }
       }
     }

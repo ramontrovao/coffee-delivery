@@ -140,7 +140,7 @@ export const Checkout: React.FC = () => {
 
           <main>
             <div>
-              <input type="text" placeholder="CEP" {...register("cep")} />
+              <input type="number" placeholder="CEP" {...register("cep")} />
             </div>
 
             <div>
@@ -148,7 +148,12 @@ export const Checkout: React.FC = () => {
             </div>
 
             <div className="input-wrapper1">
-              <input type="text" placeholder="Número" {...register("number")} />
+              <input
+                type="number"
+                placeholder="Número"
+                maxLength={5}
+                {...register("number")}
+              />
               <input
                 type="text"
                 placeholder="Complemento"
