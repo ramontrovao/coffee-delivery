@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
+  background-color: ${({ theme }) => theme["background"]};
   width: 100%;
   position: fixed;
   padding: 1.75rem 2rem;

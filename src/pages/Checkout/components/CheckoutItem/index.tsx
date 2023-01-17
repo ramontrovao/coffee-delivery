@@ -48,7 +48,7 @@ export function CheckoutItem({ name, price, imgSrc }: CheckoutItemProps) {
     <CheckoutItemContainer>
       <img src={imgSrc} />
 
-      <div>
+      <div className="rightDiv">
         <div className="nameAndPriceWrapper">
           <p>{name}</p>
 
