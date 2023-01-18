@@ -1,6 +1,8 @@
-import { Minus, Plus, ShoppingCart } from "phosphor-react";
-import { FormEvent, useState, useContext, useEffect } from "react";
+import { ShoppingCart } from "phosphor-react";
+import { FormEvent, useState, useContext } from "react";
 import { CoffeeCardContainer } from "./styles";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { CoffeeContext } from "../../../../context/CoffeeListContext";
 import { InputQuantity } from "../../../../components/InputQuantity";
 
@@ -42,7 +44,7 @@ export function CoffeeCard({
   function handleAddCoffeeSubmit(event: FormEvent) {
     event.preventDefault();
 
-    alert("Produto adicionado!");
+    toast.success("☕ Produto adicionado");
 
     const newCoffee = {
       name,
@@ -57,6 +59,20 @@ export function CoffeeCard({
 
   return (
     <CoffeeCardContainer>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        toastStyle={{ boxShadow: "none" }}
+      />
+
       <header>
         <img src={imgSrc} />
 
