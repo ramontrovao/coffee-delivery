@@ -2,23 +2,30 @@ import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { CoffeeCard } from "./components/CoffeeCard";
 import {
   AboutCoffeeContainer,
+  BenefitsContainer,
   CatalogContainer,
-  HomeContainer,
+  CoffeeInfosContainer,
+  Container,
+  Subtitle,
+  BigTitle,
+  MediumTitle,
 } from "./styles";
 
 export function Home() {
   return (
-    <HomeContainer>
+    <Container>
       <AboutCoffeeContainer>
-        <div className="coffeInfosDiv">
-          <h1>Encontre o café perfeito para qualquer hora do dia</h1>
+        <CoffeeInfosContainer>
+          <BigTitle>
+            Encontre o café perfeito para qualquer hora do dia
+          </BigTitle>
 
-          <p className="resume">
+          <Subtitle>
             Com o Coffe Delivery você recebe seu café onde estiver, a qualquer
             hora
-          </p>
+          </Subtitle>
 
-          <div className="benefitsDiv">
+          <BenefitsContainer>
             <div>
               <div className="benefitsIcon" id="benefitsIcon1">
                 <ShoppingCart size={20} color="#FFF" weight="fill" />
@@ -43,14 +50,14 @@ export function Home() {
               </div>
               <p>O café chega fresquinho até você</p>
             </div>
-          </div>
-        </div>
+          </BenefitsContainer>
+        </CoffeeInfosContainer>
 
         <img src="./assets/aboutCoffeeImg.svg" alt="" />
       </AboutCoffeeContainer>
 
       <CatalogContainer>
-        <h2 id="title">Nossos cafés</h2>
+        <MediumTitle>Nossos cafés</MediumTitle>
 
         <section>
           <CoffeeCard
@@ -166,6 +173,6 @@ export function Home() {
           />
         </section>
       </CatalogContainer>
-    </HomeContainer>
+    </Container>
   );
 }

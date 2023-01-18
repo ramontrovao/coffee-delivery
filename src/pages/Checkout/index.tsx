@@ -5,7 +5,16 @@ import * as zod from "zod";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { CoffeeContext } from "../../context/CoffeeListContext";
 import { AddressContext } from "../../context/AddressContext";
-import { CheckoutContainer, PaymentOptionButton } from "./styles";
+import {
+  AddressContainer,
+  CartContainer,
+  CheckoutContainer,
+  LeftWrapper,
+  PaymentContainer,
+  PaymentOptionButton,
+  RightWrapper,
+  SubmitButtonContainer,
+} from "./styles";
 import { CheckoutItem } from "./components/CheckoutItem";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -22,14 +31,14 @@ const newAddressFormValidationSchema = zod.object({
     .string()
     .min(8, "O CEP precisa ter 8 digitos!")
     .max(8, "O CEP precisa ter 8 digitos!"),
-  street: zod.string(),
+  street: zod.string().min(1, "Por favor, preencha este campo!"),
   number: zod
     .string()
     .min(1, "Um número residencial tem no mínimo 1 digito!")
     .max(5, "Um número residencial tem no máximo 5 digitos!"),
   complement: zod.string(),
-  district: zod.string(),
-  city: zod.string(),
+  district: zod.string().min(1, "Por favor, preencha este campo!"),
+  city: zod.string().min(1, "Por favor, preencha este campo!"),
   uf: zod
     .string()
     .min(2, "o UF precisa ter 2 dígitos!")
@@ -120,7 +129,6 @@ export const Checkout: React.FC = () => {
     if (
       cep === "" ||
       city === "" ||
-      complement === "" ||
       district === "" ||
       number === "" ||
       street === "" ||
@@ -188,10 +196,10 @@ export const Checkout: React.FC = () => {
 
   return (
     <CheckoutContainer onSubmit={handleSubmit(handleSetAddress)}>
-      <div className="wrapper1">
+      <LeftWrapper>
         <h3>Complete seu pedido</h3>
 
-        <section className="addressSection">
+        <AddressContainer>
           <header>
             <div>
               <MapPin size={22} />
@@ -227,6 +235,7 @@ export const Checkout: React.FC = () => {
             />
 
             <InputForm
+              error={errors["district"]?.message}
               type="text"
               placeholder="Bairro"
               disabled={addressIsFound}
@@ -234,6 +243,7 @@ export const Checkout: React.FC = () => {
             />
 
             <InputForm
+              error={errors["city"]?.message}
               type="text"
               placeholder="Cidade"
               disabled={addressIsFound}
@@ -254,9 +264,9 @@ export const Checkout: React.FC = () => {
               {...register("complement")}
             />
           </main>
-        </section>
+        </AddressContainer>
 
-        <section className="paymentSection">
+        <PaymentContainer>
           <header>
             <div>
               <CurrencyDollar size={22} />
@@ -289,13 +299,13 @@ export const Checkout: React.FC = () => {
               </PaymentOptionButton>
             </RadioGroup.Root>
           </main>
-        </section>
-      </div>
+        </PaymentContainer>
+      </LeftWrapper>
 
-      <div className="wrapper2">
+      <RightWrapper>
         <h3>Cafés selecionados</h3>
 
-        <section className="cartSection">
+        <CartContainer>
           <header>
             {coffeeList.length > 0 &&
               coffeeData.coffeeState.coffeeList.map((coffee) => (
@@ -334,13 +344,13 @@ export const Checkout: React.FC = () => {
             </div>
           </div>
 
-          <div className="cartSubmit">
+          <SubmitButtonContainer>
             <button type="submit" disabled={canSubmit}>
               CONFIRMAR PEDIDO
             </button>
-          </div>
-        </section>
-      </div>
+          </SubmitButtonContainer>
+        </CartContainer>
+      </RightWrapper>
     </CheckoutContainer>
   );
 };
