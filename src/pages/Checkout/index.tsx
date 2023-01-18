@@ -145,6 +145,7 @@ export const Checkout: React.FC = () => {
       gia: string;
       ddd: string;
       siafi: string;
+      erro: "true";
     }
 
     const cep = addressFormFields.cep;
@@ -152,14 +153,30 @@ export const Checkout: React.FC = () => {
     if (cep.length === 8) {
       async function getAddress() {
         const response = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-        const data = await response.json().then((data: AddresAPIData) => {
-          setValue("street", data["logradouro"]);
-          setValue("district", data["bairro"]);
-          setValue("city", data["localidade"]);
-          setValue("uf", data["uf"]);
-        });
+        const data = await response
+          .json()
+          .then((data: AddresAPIData) => {
+            console.log(data);
 
-        setAddressIsFound(true);
+            if (!data["erro"]) {
+              setValue("street", data["logradouro"]);
+              setValue("district", data["bairro"]);
+              setValue("city", data["localidade"]);
+              setValue("uf", data["uf"]);
+
+              setAddressIsFound(true);
+            } else {
+              setValue("street", "");
+              setValue("district", "");
+              setValue("city", "");
+              setValue("uf", "");
+              setAddressIsFound(false);
+            }
+          })
+          .catch((err) => {
+            alert(err);
+          });
+
         return data;
       }
 
