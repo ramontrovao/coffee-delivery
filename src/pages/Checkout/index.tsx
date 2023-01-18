@@ -41,6 +41,7 @@ type newAddressFormData = zod.infer<typeof newAddressFormValidationSchema>;
 export const Checkout: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [canSubmit, setCanSubmit] = useState(true);
+  const [addressIsFound, setAddressIsFound] = useState(false);
   const { changeAddress } = useContext(AddressContext);
   const coffeeData = useContext(CoffeeContext);
   const coffeeList = coffeeData.coffeeState.coffeeList;
@@ -64,6 +65,7 @@ export const Checkout: React.FC = () => {
     handleSubmit,
     reset,
     watch,
+    setValue,
   } = newAddressForm;
   const navigate = useNavigate();
 
@@ -131,6 +133,42 @@ export const Checkout: React.FC = () => {
     }
   }, [addressFormFields]);
 
+  useEffect(() => {
+    interface AddresAPIData {
+      cep: string;
+      logradouro: string;
+      complemento: string;
+      bairro: string;
+      localidade: string;
+      uf: string;
+      ibge: string;
+      gia: string;
+      ddd: string;
+      siafi: string;
+    }
+
+    const cep = addressFormFields.cep;
+
+    if (cep.length === 8) {
+      async function getAddress() {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+        const data = await response.json().then((data: AddresAPIData) => {
+          setValue("street", data["logradouro"]);
+          setValue("district", data["bairro"]);
+          setValue("city", data["localidade"]);
+          setValue("uf", data["uf"]);
+        });
+
+        setAddressIsFound(true);
+        return data;
+      }
+
+      getAddress();
+    } else {
+      setAddressIsFound(false);
+    }
+  }, [addressFormFields.cep]);
+
   return (
     <CheckoutContainer onSubmit={handleSubmit(handleSetAddress)}>
       <div className="wrapper1">
@@ -157,7 +195,12 @@ export const Checkout: React.FC = () => {
               {...register("cep")}
             />
 
-            <InputForm type="text" placeholder="Rua" {...register("street")} />
+            <InputForm
+              type="text"
+              placeholder="Rua"
+              disabled={addressIsFound}
+              {...register("street")}
+            />
 
             <InputForm
               error={errors["number"]?.message}
@@ -169,15 +212,22 @@ export const Checkout: React.FC = () => {
             <InputForm
               type="text"
               placeholder="Bairro"
+              disabled={addressIsFound}
               {...register("district")}
             />
 
-            <InputForm type="text" placeholder="Cidade" {...register("city")} />
+            <InputForm
+              type="text"
+              placeholder="Cidade"
+              disabled={addressIsFound}
+              {...register("city")}
+            />
 
             <InputForm
               error={errors["uf"]?.message}
               type="text"
               placeholder="UF"
+              disabled={addressIsFound}
               {...register("uf")}
             />
 
