@@ -11,6 +11,7 @@ This challenge project helped me to practice all of my knowledge of React Contex
 - React
 - Typescript
 - Styled Components
+- RadixUI
 - React Hook Form
 - Immer
 - Zod
